@@ -28,23 +28,24 @@ type Engine struct {
 func Start() {
 	fmt.Println("starting...")
 
-	var game Engine
-	game.Init()
+	var engine Engine
+	engine.InitEntities()
+	engine.InitMap()
 
 	rl.InitWindow(screen_width, screen_height, "Arcadia")
 
 	//rl.InitAudioDevice()
 
-	game.Load()
+	engine.Load()
 
 	rl.SetTargetFPS(60)
 
-	for !game.WindowShouldClose {
-		game.Update()
-		game.Draw()
+	for !engine.WindowShouldClose {
+		engine.Update()
+		engine.Draw()
 	}
 
-	game.Unload()
+	engine.Unload()
 
 	//rl.CloseAudioDevice()
 

@@ -8,8 +8,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-// Initialize values
-func (g *Engine) Init() {
+func (g *Engine) InitEntities() {
 	player := entity.Player{
 		Entity: entity.Entity{
 			Position: rl.Vector2{X: 0, Y: 0},
