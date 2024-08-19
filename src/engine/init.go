@@ -14,20 +14,28 @@ func (g *Engine) Init() {
 		Entity: entity.Entity{
 			Position: rl.Vector2{X: 0, Y: 0},
 			IsAlive:  true,
-			Health:   12,
+			Health:   100,
 			Speed:    10,
 			Sprite:   rl.LoadTexture("none"),
 		},
 
 		Money:     1000,
 		Inventory: []item.Item{},
-		LeftHand: item.Item{
-			Name:         "Dague dégueu",
-			Price:        7,
-			IsConsumable: false,
-			IsEquippable: true,
+		LeftHand: item.Weapon{
+			Item: item.Item{
+				Name:         "Dague dégueu",
+				Price:        7,
+				IsConsumable: false,
+				IsEquippable: true,
+			},
+			Durability: 27,
+			ManaCost:   0,
+			Damage:     3,
+			IsFire:     false,
+			IsPoison:   false,
+			IsRot:      false,
 		},
-		RightHand: item.Item{},
+		RightHand: item.Weapon{},
 		Equipment: []item.Item{},
 
 		Resilience:   10,
@@ -41,7 +49,7 @@ func (g *Engine) Init() {
 		Entity: entity.Entity{
 			Position: rl.Vector2{X: 0, Y: 1},
 			IsAlive:  true,
-			Health:   6,
+			Health:   80,
 			Speed:    7,
 			Sprite:   rl.LoadTexture("none"),
 		},

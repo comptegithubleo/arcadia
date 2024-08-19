@@ -10,8 +10,8 @@ type Player struct {
 	Money     int
 	Inventory []item.Item
 
-	LeftHand  item.Item
-	RightHand item.Item
+	LeftHand  item.Weapon
+	RightHand item.Weapon
 	Equipment []item.Item
 
 	// Stats when level up ?
@@ -21,7 +21,7 @@ type Player struct {
 }
 
 func (p *Player) Attack(m *Monster) {
-	m.Health -= 1
+	m.Health -= p.LeftHand.Damage + p.RightHand.Damage
 }
 
 func (p *Player) ToString() {

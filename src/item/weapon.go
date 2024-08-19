@@ -4,13 +4,14 @@ import (
 	"fmt"
 )
 
-type Weapon struct {
+type Weapon struct { // weapon, spell, staff ...
 	Item
 	Durability float64
+	ManaCost   float32
 	Damage     int
-	isFire     bool
-	isPoison   bool
-	isRot      bool
+	IsFire     bool
+	IsPoison   bool
+	IsRot      bool
 }
 
 func (w *Weapon) ToString() {

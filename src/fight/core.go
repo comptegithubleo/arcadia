@@ -9,7 +9,12 @@ func Fight(player entity.Player, monster entity.Monster) {
 	var IsOngoing = true
 
 	for IsOngoing {
-		if player.Health <= 0 || monster.Health <= 0 {
+		if player.Health <= 0 {
+			player.IsAlive = false
+			IsOngoing = false
+		} else if monster.Health <= 0 {
+			player.Inventory = append(player.Inventory, monster.Loot...)
+			player.Money += monster.Worth
 			IsOngoing = false
 		}
 
@@ -22,4 +27,5 @@ func Fight(player entity.Player, monster entity.Monster) {
 		`, player.Health, monster.Health)
 	}
 
+	fmt.Printf("inventory: %+v\nmoney: %d\n", player.Inventory, player.Money)
 }
