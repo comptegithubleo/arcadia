@@ -1,15 +1,21 @@
 package entity
 
 import (
-	rl "github.com/gen2brain/raylib-go/raylib"
+	"fmt"
+	"main/src/item"
 )
 
 type Monster struct {
-	Position rl.Vector2
-	isAlive  bool
-	health   int
+	Entity
+	Damage int
+	Loot   []item.Item
+	Worth  int //worth in gold
 }
 
-func (m *Monster) Init(health int) {
-	m.health = health
+func (m *Monster) Attack(p *Player) {
+	p.Health -= 1
+}
+
+func (m *Monster) ToString() {
+	fmt.Printf("Je suis un monstre avec %d points de vie\n", m.Health)
 }

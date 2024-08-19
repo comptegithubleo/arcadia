@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"main/src/game"
+	"main/src/engine"
 )
 
 func main() {
 	fmt.Println("starting...")
-	game.InitGame()
+	engine.Start()
 }
