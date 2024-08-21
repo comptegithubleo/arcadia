@@ -7,5 +7,11 @@ import (
 
 func main() {
 	fmt.Println("starting...")
-	engine.Start()
+	var e engine.Engine
+	
+	e.Init()
+	e.Load()
+	e.Run()
+	e.Unload()
+	e.Close()
 }

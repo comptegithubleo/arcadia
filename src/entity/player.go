@@ -3,25 +3,24 @@ package entity
 import (
 	"fmt"
 	"main/src/item"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type Player struct {
-	Entity
+	Position  rl.Vector2
+	Health    int
 	Money     int
 	Inventory []item.Item
 
-	LeftHand  item.Weapon
-	RightHand item.Weapon
-	Equipment []item.Item
+	IsAlive  bool
+	IsMoving bool
 
-	// Stats when level up ?
-	Resilience   int // adds to total Health
-	Courage      int // decrease incoming damage
-	Intelligence int // adds to magic damage
+	Sprite rl.Texture2D
 }
 
 func (p *Player) Attack(m *Monster) {
-	m.Health -= p.LeftHand.Damage + p.RightHand.Damage
+	m.Health -= 1
 }
 
 func (p *Player) ToString() {
@@ -29,7 +28,7 @@ func (p *Player) ToString() {
 	Joueur:
 		Vie: %d,
 		Argent: %d,
-		LeftHand: %+v
+		Inventory: %+v
 	
-	\n`, p.Health, p.Money, p.LeftHand)
+	\n`, p.Health, p.Money, p.Inventory)
 }
