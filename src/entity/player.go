@@ -7,14 +7,24 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+type movement int
+
+const (
+	UP    movement = iota
+	DOWN  movement = iota
+	LEFT  movement = iota
+	RIGHT movement = iota
+	NONE  movement = iota
+)
+
 type Player struct {
 	Position  rl.Vector2
 	Health    int
 	Money     int
 	Inventory []item.Item
 
-	IsAlive  bool
-	IsMoving bool
+	IsAlive           bool
+	MovementDirection movement
 
 	Sprite rl.Texture2D
 }
