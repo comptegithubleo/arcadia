@@ -2,14 +2,14 @@ package engine
 
 import rl "github.com/gen2brain/raylib-go/raylib"
 
-func (engine *Engine) Rendering() {
+func (e *Engine) Rendering() {
 	rl.BeginDrawing()
 	rl.ClearBackground(rl.Blue)
 
 	rl.EndDrawing()
 }
 
-func (engine *Engine) HomeRendering() {
+func (e *Engine) HomeRendering() {
 	rl.BeginDrawing()
 	rl.ClearBackground(rl.Blue)
 
@@ -20,17 +20,19 @@ func (engine *Engine) HomeRendering() {
 	rl.EndDrawing()
 }
 
-func (engine *Engine) RunningRendering() {
+func (e *Engine) RunningRendering() {
 	rl.BeginDrawing()
 	rl.ClearBackground(rl.Green)
 
 	rl.DrawText("Playing", int32(rl.GetScreenWidth())/2-rl.MeasureText("Playing", 40)/2, int32(rl.GetScreenHeight())/2-150, 40, rl.RayWhite)
 	rl.DrawText("[P] or [Esc] to Pause", int32(rl.GetScreenWidth())/2-rl.MeasureText("[P] or [Esc] to Pause", 20)/2, int32(rl.GetScreenHeight())/2, 20, rl.RayWhite)
+	
+	e.RenderMap()
 
 	rl.EndDrawing()
 }
 
-func (engine *Engine) PauseRendering() {
+func (e *Engine) PauseRendering() {
 	rl.BeginDrawing()
 	rl.ClearBackground(rl.Red)
 

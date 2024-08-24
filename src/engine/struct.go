@@ -27,7 +27,10 @@ type Engine struct {
 	Monsters []entity.Monster
 
 	HitSound rl.Sound
-	Sprites  rl.Texture2D
+
+	Sprites Sprites
+
+	TileMap TileMap
 
 	IsRunning   bool
 	StateMenu   menu

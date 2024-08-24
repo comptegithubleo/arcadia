@@ -1,7 +1,6 @@
 package engine
 
 import (
-	"fmt"
 	"main/src/entity"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -37,7 +36,7 @@ func (engine *Engine) RunningLogic() {
 		engine.Player.MovementDirection = entity.NONE
 	}
 
-	fmt.Printf("Player position : X:%f / Y:%f\n", engine.Player.Position.X, engine.Player.Position.Y)
+	//fmt.Printf("Player position : X:%f / Y:%f\n", engine.Player.Position.X, engine.Player.Position.Y)
 
 	// Menus
 	if rl.IsKeyPressed(rl.KeyEscape) || rl.IsKeyPressed(rl.KeyP) {
