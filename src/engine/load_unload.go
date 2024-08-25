@@ -1,32 +1,27 @@
 package engine
 
 import (
-	"fmt"
-
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 func (e *Engine) Load() {
+	// Chargement des textures du personnage
+	e.Player.Sprite = rl.LoadTexture("textures/entities/soldier/Soldier-Idle.png")
 
-	e.Sprites.Plants = rl.LoadTexture("textures/map/tilesets/TX Plant.png")
-	e.Sprites.PlantsShadow = rl.LoadTexture("textures/map/tilesets/TX Shadow Plant.png")
-	/* e.Sprites = append(e.Sprites,
-		Sprite{
-			Name:   "grass",
-			Sprite: rl.LoadTexture("texture/map/tilesets/TXPlant.png"),
-		},
-	) */
-
-	fmt.Println("====================================")
-	fmt.Println(e.Sprites.Plants.ID)
+	// Chargement des textures de la carte
+	e.Sprites["Plant"] = rl.LoadTexture("textures/map/tilesets/TX Plant.png")
+	e.Sprites["PlantShadow"] = rl.LoadTexture("textures/map/tilesets/TX Shadow Plant.png")
 }
 
 func (e *Engine) Unload() {
-	rl.UnloadTexture(e.Sprites.Plants)
-	rl.UnloadTexture(e.Sprites.PlantsShadow)
-	/*
-		 	for i := 0; i < len(e.Sprites); i++ {
-				rl.UnloadTexture(e.Sprites[i].Sprite)
-			}
-	*/
+	rl.UnloadTexture(e.Player.Sprite)
+
+	for _, sprite := range e.Sprites {
+		rl.UnloadTexture(sprite)
+	}
+
+	for _, monster := range e.Monsters {
+		rl.UnloadTexture(monster.Sprite)
+	}
+
 }

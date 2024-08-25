@@ -18,9 +18,12 @@ const (
 )
 
 type Player struct {
+	Rect rl.Rectangle
+
 	Position  rl.Vector2
 	Health    int
 	Money     int
+	Speed     float32
 	Inventory []item.Item
 
 	IsAlive           bool

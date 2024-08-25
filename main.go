@@ -1,16 +1,20 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"main/src/engine"
+	"net/http"
+	_ "net/http/pprof"
 )
 
 func main() {
-	fmt.Println("starting...")
 	var e engine.Engine
-	
+
 	e.Init()
 	e.Load()
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 	e.Run()
 	e.Unload()
 	e.Close()

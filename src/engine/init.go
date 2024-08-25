@@ -1,7 +1,6 @@
 package engine
 
 import (
-	"fmt"
 	"main/src/entity"
 	"main/src/fight"
 	"main/src/item"
@@ -10,38 +9,42 @@ import (
 )
 
 const (
-	ScreenWidth  = 500
-	ScreenHeight = 300
+	ScreenWidth  = 1400
+	ScreenHeight = 800
 )
 
 func (e *Engine) Init() {
-	fmt.Println("starting...")
-
-	e.IsRunning = true
-
-	e.InitEntities()
-
-	//e.InitMap("src/map/map_GROUND.csv")
-
 	rl.InitWindow(ScreenWidth, ScreenHeight, "Arcadia")
 
-	//rl.InitAudioDevice()
+	// Initialisation des variables de l'engine
+	e.IsRunning = true
+	e.Sprites = make(map[string]rl.Texture2D)
+	e.Monsters = make(map[string]entity.Monster)
+
+	// Initialisation des composants du jeu
+	e.InitEntities()
+	e.InitCamera()
+	e.InitMap("textures/map/tilesets/map.json")
+
+	rl.InitAudioDevice()
 }
 
 func (e *Engine) InitEntities() {
-	player := entity.Player{
-		Position:  rl.Vector2{X: 0, Y: 0},
+
+	e.Player = entity.Player{
+		Position:  rl.Vector2{X: 350, Y: 300},
 		Health:    100,
 		Money:     1000,
+		Speed:     2.3,
 		Inventory: []item.Item{},
 
 		IsAlive: true,
 
-		Sprite: rl.LoadTexture("none"),
+		Sprite: e.Player.Sprite,
 	}
-	player.ToString()
+	e.Player.ToString()
 
-	monster := entity.Monster{
+	e.Monsters["claude"] = entity.Monster{
 		Position: rl.Vector2{X: 0, Y: 1},
 		Health:   20,
 		Damage:   5,
@@ -49,13 +52,19 @@ func (e *Engine) InitEntities() {
 		Worth:    12,
 
 		IsAlive: true,
-
-		Sprite: rl.LoadTexture("ok"),
+		Sprite:  rl.LoadTexture("textures/entities/orc/Orc-Idle.png"),
 	}
-	monster.ToString()
 
-	fight.Fight(player, monster)
+	fight.Fight(e.Player, e.Monsters["claude"])
 
-	//g.GameOver = false
 	e.Player.Money = 12
+}
+
+func (e *Engine) InitCamera() {
+	e.Camera = rl.NewCamera2D( //Camera vide, a changer dans chaque logique de scene
+		rl.NewVector2(0, 0),
+		rl.NewVector2(0, 0),
+		0.0,
+		2.0,
+	)
 }

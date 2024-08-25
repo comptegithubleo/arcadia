@@ -12,18 +12,19 @@ func (engine *Engine) Run() {
 		case HOME:
 			engine.HomeLogic()
 			engine.HomeRendering()
+
 		case SETTINGS:
 			engine.SettingsLogic()
+
 		case PLAY:
 			switch engine.StateEngine {
 			case RUNNING:
 				engine.RunningLogic()
 				engine.RunningRendering()
-				//PlayRender()
+
 			case PAUSE:
 				engine.PauseLogic()
 				engine.PauseRendering()
-				//PauseRender()
 
 			case GAMEOVER:
 				//...

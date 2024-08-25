@@ -24,13 +24,15 @@ const (
 
 type Engine struct {
 	Player   entity.Player
-	Monsters []entity.Monster
+	Monsters map[string]entity.Monster
 
-	HitSound rl.Sound
+	Sounds []rl.Sound
 
-	Sprites Sprites
+	Sprites map[string]rl.Texture2D
 
-	TileMap TileMap
+	Camera rl.Camera2D
+
+	MapJSON MapJSON
 
 	IsRunning   bool
 	StateMenu   menu
