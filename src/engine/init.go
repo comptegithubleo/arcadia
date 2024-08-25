@@ -24,28 +24,27 @@ func (e *Engine) Init() {
 	// Initialisation des composants du jeu
 	e.InitEntities()
 	e.InitCamera()
+	e.InitMusic()
 	e.InitMap("textures/map/tilesets/map.json")
 
-	rl.InitAudioDevice()
 }
 
 func (e *Engine) InitEntities() {
 
 	e.Player = entity.Player{
-		Position:  rl.Vector2{X: 350, Y: 300},
+		Position:  rl.Vector2{X: 300, Y: 300},
 		Health:    100,
 		Money:     1000,
-		Speed:     2.3,
+		Speed:     2,
 		Inventory: []item.Item{},
 
 		IsAlive: true,
 
 		Sprite: e.Player.Sprite,
 	}
-	e.Player.ToString()
 
 	e.Monsters["claude"] = entity.Monster{
-		Position: rl.Vector2{X: 0, Y: 1},
+		Position: rl.Vector2{X: 400, Y: 320},
 		Health:   20,
 		Damage:   5,
 		Loot:     []item.Item{},
@@ -67,4 +66,12 @@ func (e *Engine) InitCamera() {
 		0.0,
 		2.0,
 	)
+}
+
+func (e *Engine) InitMusic() {
+	rl.InitAudioDevice()
+
+	e.Music = rl.LoadMusicStream("sounds/music/OSC-Ambient-Time-08-Egress.mp3")
+
+	rl.PlayMusicStream(e.Music)
 }

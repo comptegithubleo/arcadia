@@ -26,7 +26,8 @@ type Engine struct {
 	Player   entity.Player
 	Monsters map[string]entity.Monster
 
-	Sounds []rl.Sound
+	Music       rl.Music
+	MusicVolume float32
 
 	Sprites map[string]rl.Texture2D
 

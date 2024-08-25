@@ -7,13 +7,10 @@ import (
 func (e *Engine) Load() {
 	// Chargement des textures du personnage
 	e.Player.Sprite = rl.LoadTexture("textures/entities/soldier/Soldier-Idle.png")
-
-	// Chargement des textures de la carte
-	e.Sprites["Plant"] = rl.LoadTexture("textures/map/tilesets/TX Plant.png")
-	e.Sprites["PlantShadow"] = rl.LoadTexture("textures/map/tilesets/TX Shadow Plant.png")
 }
 
 func (e *Engine) Unload() {
+	// On libère les textures chargées, le joueur, la map, les monstres, etc...
 	rl.UnloadTexture(e.Player.Sprite)
 
 	for _, sprite := range e.Sprites {
@@ -23,5 +20,4 @@ func (e *Engine) Unload() {
 	for _, monster := range e.Monsters {
 		rl.UnloadTexture(monster.Sprite)
 	}
-
 }

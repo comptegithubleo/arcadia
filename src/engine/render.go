@@ -26,13 +26,18 @@ func (e *Engine) RunningRendering() {
 	rl.BeginDrawing()
 	rl.ClearBackground(rl.Gray)
 
-	rl.BeginMode2D(e.Camera)
-
-	rl.DrawText("Playing", int32(rl.GetScreenWidth())/2-rl.MeasureText("Playing", 40)/2, int32(rl.GetScreenHeight())/2-150, 40, rl.RayWhite)
-	rl.DrawText("[P] or [Esc] to Pause", int32(rl.GetScreenWidth())/2-rl.MeasureText("[P] or [Esc] to Pause", 20)/2, int32(rl.GetScreenHeight())/2, 20, rl.RayWhite)
+	rl.BeginMode2D(e.Camera) // On commence le rendu camera
 
 	e.RenderMap()
+
+	e.RenderMonsters()
 	e.RenderPlayer()
+
+	rl.EndMode2D() // On finit le rendu camera
+
+	// Ecriture fixe (car pas affectée par le mode camera)
+	rl.DrawText("Playing", int32(rl.GetScreenWidth())/2-rl.MeasureText("Playing", 40)/2, int32(rl.GetScreenHeight())/2-350, 40, rl.RayWhite)
+	rl.DrawText("[P] or [Esc] to Pause", int32(rl.GetScreenWidth())/2-rl.MeasureText("[P] or [Esc] to Pause", 20)/2, int32(rl.GetScreenHeight())/2-300, 20, rl.RayWhite)
 
 	rl.EndDrawing()
 }
@@ -52,12 +57,24 @@ func (e *Engine) RenderPlayer() {
 
 	rl.DrawTexturePro(
 		e.Player.Sprite,
-		rl.NewRectangle(0, 0, 100, 100), //source rectangle
+		rl.NewRectangle(0, 0, 100, 100),
 		rl.NewRectangle(e.Player.Position.X, e.Player.Position.Y, 150, 150),
 		rl.Vector2{X: 0, Y: 0},
 		0,
 		rl.White,
 	)
 
-	rl.EndMode2D()
+}
+
+func (e *Engine) RenderMonsters() {
+	for _, monster := range e.Monsters {
+		rl.DrawTexturePro(
+			monster.Sprite,
+			rl.NewRectangle(0, 0, 100, 100),
+			rl.NewRectangle(monster.Position.X, monster.Position.Y, 150, 150),
+			rl.Vector2{X: 0, Y: 0},
+			0,
+			rl.White,
+		)
+	}
 }
