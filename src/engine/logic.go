@@ -63,9 +63,6 @@ func (e *Engine) RunningLogic() {
 			fmt.Println("collision !")
 		}
 	}
-	fmt.Println("=============")
-	fmt.Println(e.Monsters["claude"].Position.X, e.Monsters["claude"].Position.Y)
-	fmt.Println(e.Player.Position.X, e.Player.Position.Y)
 
 	//Musique
 	rl.UpdateMusicStream(e.Music)
