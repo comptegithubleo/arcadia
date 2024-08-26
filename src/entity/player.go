@@ -8,7 +8,6 @@ import (
 )
 
 type Player struct {
-	Rect rl.Rectangle
 
 	Position  rl.Vector2
 	Health    int

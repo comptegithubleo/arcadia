@@ -1,27 +1,27 @@
 package engine
 
 import (
-	"fmt"
-	"main/src/entity"
-
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 func (e *Engine) HomeLogic() {
+
+	//Musique
+	if !rl.IsMusicStreamPlaying(e.Music) {
+		e.Music = rl.LoadMusicStream("sounds/music/OSC-Ambient-Time-08-Egress.mp3")
+		rl.PlayMusicStream(e.Music)
+	}
+	rl.UpdateMusicStream(e.Music)
+
 	//Menus
 	if rl.IsKeyPressed(rl.KeyEnter) {
 		e.StateMenu = PLAY
 		e.StateEngine = RUNNING
-
-		e.Music = rl.LoadMusicStream("sounds/music/OSC-Ambient-Time-07-Simon_s-In-There-Somewhere.mp3")
-		rl.PlayMusicStream(e.Music)
+		rl.StopMusicStream(e.Music)
 	}
 	if rl.IsKeyPressed(rl.KeyEscape) {
 		e.IsRunning = false
 	}
-
-	//Musique
-	rl.UpdateMusicStream(e.Music)
 }
 
 func (e *Engine) SettingsLogic() {
@@ -57,26 +57,32 @@ func (e *Engine) RunningLogic() {
 		e.StateEngine = PAUSE
 	}
 
-	// Collision avec monstres
-	for _, monstre := range e.Monsters {
-		if collision(monstre, e.Player) {
-			fmt.Println("collision !")
-		}
-	}
+	e.CheckCollisions()
 
 	//Musique
+	if !rl.IsMusicStreamPlaying(e.Music) {
+		e.Music = rl.LoadMusicStream("sounds/music/OSC-Ambient-Time-07-Simon_s-In-There-Somewhere.mp3")
+		rl.PlayMusicStream(e.Music)
+	}
 	rl.UpdateMusicStream(e.Music)
 }
 
-func collision(monster entity.Monster, player entity.Player) bool {
-	if monster.Position.X > player.Position.X-20 &&
-		monster.Position.X < player.Position.X+20 &&
-		monster.Position.Y > player.Position.Y-20 &&
-		monster.Position.Y < player.Position.Y+20 {
+func (e *Engine) CheckCollisions() {
 
-		return true
-	} else {
-		return false
+	e.MonsterCollisions()
+}
+
+func (e *Engine) MonsterCollisions() {
+	for _, monster := range e.Monsters {
+		if monster.Position.X > e.Player.Position.X-20 &&
+			monster.Position.X < e.Player.Position.X+20 &&
+			monster.Position.Y > e.Player.Position.Y-20 &&
+			monster.Position.Y < e.Player.Position.Y+20 {
+
+			//lancer un combat ?
+		} else {
+			//...
+		}
 	}
 }
 
@@ -87,9 +93,7 @@ func (e *Engine) PauseLogic() {
 	}
 	if rl.IsKeyPressed(rl.KeyA) {
 		e.StateMenu = HOME
-
-		e.Music = rl.LoadMusicStream("sounds/music/OSC-Ambient-Time-08-Egress.mp3")
-		rl.PlayMusicStream(e.Music)
+		rl.StopMusicStream(e.Music)
 	}
 
 	//Musique
