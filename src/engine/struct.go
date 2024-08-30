@@ -17,14 +17,14 @@ const (
 type engine int
 
 const (
-	RUNNING  engine = iota
+	INGAME  engine = iota
 	PAUSE    engine = iota
 	GAMEOVER engine = iota
 )
 
 type Engine struct {
 	Player   entity.Player
-	Monsters map[string]entity.Monster
+	Monsters []entity.Monster
 
 	Music       rl.Music
 	MusicVolume float32

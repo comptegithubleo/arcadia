@@ -8,27 +8,32 @@ func (engine *Engine) Run() {
 	rl.SetTargetFPS(60)
 
 	for engine.IsRunning {
+
+		rl.BeginDrawing()
+
 		switch engine.StateMenu {
 		case HOME:
-			engine.HomeLogic()
 			engine.HomeRendering()
+			engine.HomeLogic()
 
 		case SETTINGS:
 			engine.SettingsLogic()
 
 		case PLAY:
 			switch engine.StateEngine {
-			case RUNNING:
-				engine.RunningLogic()
-				engine.RunningRendering()
+			case INGAME:
+				engine.InGameRendering()
+				engine.InGameLogic()
 
 			case PAUSE:
-				engine.PauseLogic()
 				engine.PauseRendering()
+				engine.PauseLogic()
 
 			case GAMEOVER:
 				//...
 			}
 		}
+
+		rl.EndDrawing()
 	}
 }

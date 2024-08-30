@@ -2,7 +2,6 @@ package engine
 
 import (
 	"main/src/entity"
-	"main/src/fight"
 	"main/src/item"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -19,7 +18,6 @@ func (e *Engine) Init() {
 	// Initialisation des variables de l'engine
 	e.IsRunning = true
 	e.Sprites = make(map[string]rl.Texture2D)
-	e.Monsters = make(map[string]entity.Monster)
 
 	// Initialisation des composants du jeu
 	e.InitEntities()
@@ -43,18 +41,17 @@ func (e *Engine) InitEntities() {
 		Sprite: e.Player.Sprite,
 	}
 
-	e.Monsters["claude"] = entity.Monster{
+	e.Monsters = append(e.Monsters, entity.Monster{
+		Name:     "claude",
 		Position: rl.Vector2{X: 400, Y: 320},
 		Health:   20,
 		Damage:   5,
 		Loot:     []item.Item{},
 		Worth:    12,
 
-		IsAlive: true,
-		Sprite:  rl.LoadTexture("textures/entities/orc/Orc-Idle.png"),
-	}
-
-	fight.Fight(e.Player, e.Monsters["claude"])
+		IsAlive:  true,
+		Sprite:   rl.LoadTexture("textures/entities/orc/Orc-Idle.png"),
+	})
 
 	e.Player.Money = 12
 }
