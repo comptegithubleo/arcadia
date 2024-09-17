@@ -3,6 +3,7 @@ package engine
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"path"
 
@@ -102,9 +103,22 @@ func (e *Engine) RenderMap() {
 	for _, Layer := range e.MapJSON.Layers {
 		for _, tile := range Layer.Data {
 			if tile != 0 {
+
+				if tile > 3221225472 {
+					srcRectangle.Height = -srcRectangle.Height
+					srcRectangle.Width = -srcRectangle.Width
+					tile -= 3221225472
+				} else if tile > 2147483648 { //horizontal flip adds 1073741824 to GID
+					srcRectangle.Width = -srcRectangle.Width
+					tile -= 2147483648
+				} else if tile > 1073741824 { //vertical flips adds 2147483648 to GID
+					srcRectangle.Height = -srcRectangle.Height
+					tile -= 1073741824
+				}
+
 				wantedTileSet := e.MapJSON.TileSets[0]
 				for _, TileSet := range e.MapJSON.TileSets { // Get correct texture
-					if TileSet.FirstGid < tile {
+					if TileSet.FirstGid <= tile {
 						wantedTileSet = TileSet
 					}
 				}
@@ -114,7 +128,7 @@ func (e *Engine) RenderMap() {
 				srcRectangle.X = float32(index)
 				srcRectangle.Y = 0
 
-				if index > wantedTileSet.Columns { // If Tile number exceeds columns (overflow), adjust, find X and Y coordinates
+				if index >= wantedTileSet.Columns { // If Tile number exceeds columns (overflow), adjust, find X and Y coordinates
 					srcRectangle.X = float32(index % wantedTileSet.Columns)
 					srcRectangle.Y = float32(index / wantedTileSet.Columns)
 				}
@@ -133,14 +147,15 @@ func (e *Engine) RenderMap() {
 			}
 
 			// After each draw, move to the right. When at max width, new line (like a typewriter)
-			destRectangle.X += 32
+			destRectangle.X += float32(e.MapJSON.TileWidth)
 			column_counter += 1
 			if column_counter >= e.MapJSON.Width {
 				destRectangle.X = 0
-				destRectangle.Y += 32
+				destRectangle.Y += float32(e.MapJSON.TileHeight)
 				column_counter = 0
 			}
 
+			srcRectangle.Width, srcRectangle.Height = float32(math.Abs(float64(srcRectangle.Width))), float32(math.Abs(float64(srcRectangle.Height)))
 		}
 		destRectangle.X, destRectangle.Y, column_counter = 0, 0, 0
 	}
